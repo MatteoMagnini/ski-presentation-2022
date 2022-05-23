@@ -9,9 +9,14 @@
 \documentclass[presentation]{beamer}\mode<presentation>{\usetheme{AMSBolognaFC}}
 %\documentclass[handout]{beamer}\mode<handout>{\usetheme{AMSBolognaFC}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage{cleveref}
+\crefname{item}{item}{items}
+\Crefname{Item}{Item}{Items}
 \usepackage{wasysym}
-\usepackage[yyyymmdd]{datetime}
-\renewcommand{\dateseparator}{}
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{-}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
@@ -21,19 +26,19 @@
 \newcommand{\templatepatch}{20220217}
 \newcommand{\templateversion}{\templatemajor.\templateminor.\templatepatch}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[AMS Bologna FC Beamer Style]
-{AMS Bologna FC Beamer Style}
+\title[SKI: Symbolic Knowledge Injection]
+{SKI: Symbolic Knowledge Injection}
 %
-\subtitle[AMS Series Templates]
-{AMS Series Templates}
+\subtitle[state of the art and our current works]
+{state of the art and our current works}
 %
-\author[\sspeaker{Omicini} \and Else]
-{\speaker{Andrea Omicini} \and Nobody Else\\\href{mailto:andrea.omicini@unibo.it}{andrea.omicini@unibo.it} \and \href{mailto:nobody.else@unibo.it}{nobody.else@unibo.it}}
+\author[\sspeaker{Magnini}]
+{\speaker{Matteo Magnini}\\\href{mailto:matteo.magnini@unibo.it}{matteo.magnini@unibo.it}}
 %
 \institute[DISI, Univ.\ Bologna]
 {Dipartimento di Informatica -- Scienza e Ingegneria (DISI)\\\textsc{Alma Mater Studiorum} -- Universit{\`a} di Bologna}
 %
-\date[v.\ \templateversion]{version \templateversion}
+\date[\today]{\today}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -56,77 +61,153 @@
 %===============================================================================
 
 %/////////
-\begin{frame}[c]{Academic Presentations}
+\begin{frame}[c]{Definition}
 %
-\begin{itemize}
-	\item technical presentations are common in the academic environment
-	\item \alert{\LaTeX{}}\footnote{\uurl{http://latex.org}} is typically used for scientific literature
-	\begin{itemize}
-		\item for better formulas, bibliography, typography, \ldots
-	\end{itemize}
-	\item so, \LaTeX{} is the most typical \emph{toolbox} for scientific presentations
-	\begin{itemize}
-		\item which easily translates into teaching presentations, too
-	\end{itemize}
-\end{itemize}
+We define symbolic knowledge injection as:
+%
+\begin{displayquote}\itshape
+    any \emph{algorithmic} procedure affecting how \textcolor{bolognafcred}{sub-symbolic predictors} draw their inferences in such a way that predictions are either \emph{computed} as a function of, or made \emph{consistent} with, some \emph{given} \textcolor{bolognafcred}{symbolic knowledge}.
+\end{displayquote}
 %
 \end{frame}
 %/////////
 
 %/////////
-\begin{frame}[c]{Beamer}
-%
+\begin{frame}[c]{Symbolic Knowledge}
+    %
+    A symbolic representation consists of:
+    %
+    \begin{enumerate}
+        \item a set of symbols;
+        \item\label{item:symbolic-combination} a set of grammatical rules governing the combining of symbols; 
+        \item\label{item:symbolic-assignment} elementary symbols and any admissible combination of them can be assigned with meaning.
+        %
+        \begin{itemize}
+            \item[$\Rightarrow$] Symbolic knowledge is both human and machine interpretable;
+            \item First order logic (FOL) is an example of symbolic representation.
+            %
+        \end{itemize}
+    \end{enumerate}
+    
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Sub-symbolic data}
+    \begin{itemize}
+        \item ML methods, and sub-symbolic approaches in general, represent data as arrays of real numbers, and knowledge as functions over such data.
+        %
+        \item Despite numbers are technically symbols as well, we cannot consider arrays and their functions as symbolic knowledge representation (KR) means.
+        %
+        \item Sub-symbolic approaches frequently violate \Cref{item:symbolic-combination,item:symbolic-assignment}.
+        %
+    \end{itemize}
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Sub-symbolic predictors}
+    %
+    \begin{itemize}
+        \item deep neural networks (DNN);
+        \begin{itemize}
+            \item Convolutional neural networks (CNN);
+            \item Recurrent neural networks (RNN).
+        \end{itemize}
+        \item kernel machines;
+        \item others.
+    \end{itemize}
+    %
+    \vfill
+    %
+    The vast majority of predictors are NN most probably because they are easy to manipulate and they have top performances.
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Why SKI}
+    %
+    There are several benefits:
+    %
 \begin{itemize}
-	\item \alert{Beamer} is a \LaTeX{} document class for creating presentation \emph{slides}, with a wide range of \emph{templates} and a set of features for making \emph{slideshow effects}
-	\begin{description}
-		\item[repo] \uurl{https://github.com/josephwright/beamer}
-		\item[CTAN] \uurl{https://ctan.org/pkg/beamer}
-	\end{description}
-	\item even though other styles for \LaTeX{} presentations exist, Beamer is by far the best way today
+    \item reduce learning time;
+    %
+    \item reduce the data size needed for training;
+    %
+    \item improve predictor's accuracy;
+    %
+    \item build a predictor that behave as a logic engine.
 \end{itemize}
 %
 \end{frame}
 %/////////
 
-%/////////
-\begin{frame}[c]{AMS}
-%
-\begin{description}
-	\item[AMS] Alma Mater Studiorum--Università di Bologna
-	\item[Cesena] Campus of Cesena
-	\begin{itemize}
-		\item hence the AMS Cesena Campus logo on the bottom-left corner
-	\end{itemize}
-\end{description}
-%
-\end{frame}
-%/////////
+
+
+%===============================================================================
+\section{Taxonomy}
+%===============================================================================
 
 %/////////
 \begin{frame}[c]{Aim}
-%
-\begin{itemize}
-	\item many occasions for presentation
-	\item many different people in the group
-	\item a common reference could be useful
-	\item hence, this style
-	\item based on random Beamer styles, and using some references for the colours
-\end{itemize}
-%
+    %
+    %
 \end{frame}
 %/////////
 
 %/////////
-\begin{frame}[c]{Who}
-%
-\begin{itemize}
-	\item mostly, myself
-	\item and, collaborators of mine---the \alert{good} ones \textcolor{bolognafcred}{\smiley{}}
-	\item everybody else, \emph{be my guest!}
-\end{itemize}
-%
+\begin{frame}[c]{Predictors}
+    %
+    %
 \end{frame}
 %/////////
+
+%/////////
+\begin{frame}[c]{How}
+    %
+    There exist three major ways to perform knowledge injection on sub-symbolic predictors:
+    %
+    \begin{itemize}
+        \item constraining, a cost factor proportional to the violation of the knowledge is introduced during learning;
+        \item structuring, the architecture of the predictor is built in such a way to mimic the knowledge;
+        \item embedding, the symbolic knowledge is embedded into a tensor form and it is given in input as training data to the predictor.
+   \end{itemize} 
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Constraining}
+    %
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Structuring}
+    %
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Embedding}
+    %
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Logics}
+    %
+    %
+\end{frame}
+%/////////
+
+
+
+
 
 %===============================================================================
 \section{Use}
