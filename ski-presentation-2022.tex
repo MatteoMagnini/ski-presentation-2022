@@ -25,6 +25,14 @@
 \newcommand{\templateminor}{4}
 \newcommand{\templatepatch}{20220217}
 \newcommand{\templateversion}{\templatemajor.\templateminor.\templatepatch}
+\newcommand{\argmin}[2]{\underset{#1}{\text{argmin}} \left\{ #2 \right\}}
+\newcommand{\argmax}[2]{\underset{#1}{\text{argmax}} \left\{ #2 \right\}}
+\newcommand{\unify}[2]{\text{unify}(#1, #2)}
+\newcommand{\mgu}[2]{\text{mgu}(#1, #2)}
+\newcommand{\functor}[1]{\mathtt{#1}}
+\newcommand{\variable}[1]{\mathit{#1}}
+\newcommand{\predication}[1]{\mathit{#1}}
+\newcommand{\consdot}{\functor{~.~}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[SKI: Symbolic Knowledge Injection]
 {SKI: Symbolic Knowledge Injection}
@@ -83,8 +91,8 @@ We define symbolic knowledge injection as:
         \item\label{item:symbolic-assignment} elementary symbols and any admissible combination of them can be assigned with meaning.
         %
         \begin{itemize}
-            \item[$\Rightarrow$] Symbolic knowledge is both human and machine interpretable;
-            \item First order logic (FOL) is an example of symbolic representation.
+            \item[$\Rightarrow$] Symbolic knowledge is both human and machine interpretable,
+            \item first order logic (FOL) is an example of symbolic representation.
             %
         \end{itemize}
     \end{enumerate}
@@ -95,11 +103,11 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Sub-symbolic data}
     \begin{itemize}
-        \item ML methods, and sub-symbolic approaches in general, represent data as arrays of real numbers, and knowledge as functions over such data.
+        \item ML methods, and sub-symbolic approaches in general, represent data as arrays of real numbers, and knowledge as functions over such data;
         %
-        \item Despite numbers are technically symbols as well, we cannot consider arrays and their functions as symbolic knowledge representation (KR) means.
+        \item despite numbers are technically symbols as well, we cannot consider arrays and their functions as symbolic knowledge representation (KR) means;
         %
-        \item Sub-symbolic approaches frequently violate \Cref{item:symbolic-combination,item:symbolic-assignment}.
+        \item sub-symbolic approaches frequently violate \Cref{item:symbolic-combination,item:symbolic-assignment}.
         %
     \end{itemize}
     %
@@ -112,8 +120,8 @@ We define symbolic knowledge injection as:
     \begin{itemize}
         \item deep neural networks (DNN);
         \begin{itemize}
-            \item Convolutional neural networks (CNN);
-            \item Recurrent neural networks (RNN).
+            \item convolutional neural networks (CNN),
+            \item recurrent neural networks (RNN);
         \end{itemize}
         \item kernel machines;
         \item others.
@@ -126,7 +134,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Why SKI}
+\begin{frame}[c]{Why SKI?}
     %
     There are several benefits:
     %
@@ -144,7 +152,6 @@ We define symbolic knowledge injection as:
 %/////////
 
 
-
 %===============================================================================
 \section{Taxonomy}
 %===============================================================================
@@ -152,13 +159,43 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Aim}
     %
+    \begin{block}{Enrich (learning support)}
+        \begin{itemize}
+            \item reduce learning time;
+            %
+            \item reduce the data size needed for training;
+            %
+            \item improve predictor's accuracy.
+        \end{itemize}
+    \end{block}
     %
+    \begin{block}{Manifold (symbolic knowledge manipulation)}
+        \begin{itemize}
+            \item logic inference;
+            %
+            \item information retrieval;
+            %
+            \item knowledge base completion/fusion.
+        \end{itemize}
+    \end{block}
 \end{frame}
 %/////////
 
 %/////////
 \begin{frame}[c]{Predictors}
     %
+    \begin{itemize}
+        \item theoretically, one can inject prior knowledge into any sub-symbolic predictor;
+        %
+        \item in practice, NN are almost the sole predictors treated in literature;
+        %
+        \item however, lot of different NN architecture are considered.
+    \end{itemize}
+    %
+    \begin{figure}
+        \centering
+        \includegraphics[width=.6\linewidth]{figures/neuron.png}
+    \end{figure}
     %
 \end{frame}
 %/////////
@@ -180,12 +217,41 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Constraining}
     %
+    \begin{itemize}
+        \item Knowledge cost factor is introduced in the loss function;
+        %
+        \item for NN the cost affects backpropagation during training.
+        %
+        \begin{itemize}
+            \item[$\Rightarrow$] Predictor does not violate the prior knowledge (to a certain extent)
+        \end{itemize} 
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/ski-constraining}
+    \end{figure}
     %
 \end{frame}
 %/////////
 
 %/////////
 \begin{frame}[c]{Structuring}
+    %
+    \begin{itemize}
+        \item Inner architecture is shaped to be able to ``mimic'' the knowledge;
+        %
+        \item for NN this means \emph{ad-hoc} layers.
+        %
+        \begin{itemize}
+            \item[$\Rightarrow$] Predictor directly exploits knowledge when needed.
+        \end{itemize} 
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/ski-structuring}
+    \end{figure}
     %
     %
 \end{frame}
@@ -194,6 +260,20 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Embedding}
     %
+    \begin{itemize}
+        \item Symbolic knowledge is embedded into a tensor form;
+        %
+        \item this is used as predictor's input data (alone or with a ``standard'' dataset).
+        %
+        \begin{itemize}
+            \item[$\Rightarrow$] Predictor's aim is manifold in most cases.
+        \end{itemize} 
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/ski-embedding}
+    \end{figure}
     %
 \end{frame}
 %/////////
@@ -201,253 +281,133 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Logics}
     %
+    \begin{itemize}
+        \item first order logic (FOL);
+        %
+        \item knowledge graph (KG);
+        %
+        \item propositional logic (PL).
+        
+    \end{itemize}
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{FOL}
+    \begin{itemize}
+        \item FOL is extremely flexible and expressive;
+        \item you can use recursion and define recursive structures;
+        \item maybe too ``powerful'' for canonic NN.
+        \begin{itemize}
+            \item[$\Rightarrow$] Most NN are natively DAG (directed acyclic graph)
+            \item this allow backpropagation as training algorithm but ...
+            \item how can you support recursion?  
+        \end{itemize}
+    \end{itemize}
+    \centering\vfill
+    %
+    \phantom{You can't!}
+    %
+    \phantom{Unless you use some tricks.}
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{FOL}
+    \begin{itemize}
+        \item FOL is extremely flexible and expressive;
+        \item you can use recursion and define recursive structures;
+        \item maybe too ``powerful'' for canonic NN.
+        \begin{itemize}
+            \item[$\Rightarrow$] Most NN are natively DAG (directed acyclic graph)
+            \item this allow backpropagation as training algorithm but ...
+            \item how can you support recursion?  
+        \end{itemize}
+    \end{itemize}
+    \centering\vfill
+    %
+    You can't!
+    %
+    Unless you use some tricks.
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{KG}
+    %
+    \begin{itemize}
+        \item Only constants, variables and n-ary predicates with $n < 3$;
+        \item collections of triplets $\langle \functor{a}\ \predication{f}\ \functor{b} \rangle$ or $\predication{f}(\functor{a}, \functor{b})$
+        \item essentially directed graph:
+        \begin{itemize}
+            \item nodes $\Rightarrow$ individuals,
+            \item vertices $\Rightarrow$ properties connecting individuals;
+        \end{itemize}
+        \item may instantiate an ontology, i.e., a formal description of classes characterising a given domain.
+    \end{itemize}
+    
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{PL}
+    %
+    \begin{itemize}
+        \item No quantifiers, terms, and non-atomic predicates;
+        \item expressions involving one or many 0-ary predicates (propositions) possibly interconnected by ordinary logic connectives;
+        \item low expressiveness, but easy to work with.
+    \end{itemize}
+\end{frame}
+%/////////
+
+
+%===============================================================================
+\section{Literature overview}
+%===============================================================================
+
+%/////////
+\begin{frame}[c]{First works}
     %
 \end{frame}
 %/////////
 
 
-
-
+%/////////
+\begin{frame}[c]{Notable works}
+    %
+\end{frame}
+%/////////
 
 %===============================================================================
-\section{Use}
+\section{PSyKI}
 %===============================================================================
 
-%/////////
-\begin{frame}[c,allowframebreaks]{Files}
-%
-\begin{block}{Style files}
-The files
-\begin{itemize}
-	\item \texttt{beamercolorthemebolognafc.sty}
-	\item \texttt{beamerthemeAMSBolognaFC.sty}
-	\item \texttt{almacesena-background.pdf}
-\end{itemize}
-should be placed either in the local folder with the main \texttt{.tex} file, or, in your Beamer system directory, e.g.
-\begin{itemize}
-	\item \texttt{/Users/\{username\}/Library/texmf/tex/latex/local/beamer/}
-\end{itemize}
-\end{block}
-%
-\begin{block}{BST files}
-The files
-\begin{itemize}
-	\item \texttt{apalike-AMS.bst}
-\end{itemize}
-should be placed either in the local folder with the main \texttt{.tex} file, or, in your Beamer system directory, e.g.
-\begin{itemize}
-	\item \texttt{/Users/\{username\}/Library/texmf/bibtex/bst/local/}
-\end{itemize}
-\end{block}
-%
-\end{frame}
-%/////////
 
 %/////////
-\begin{frame}[c,fragile]{Declaration}
-%
-\begin{block}{\texttt{\textbackslash{}documentclass}}
-Your main Beamer \texttt{.tex} file should open with the declaration
-%
-\begin{verbatim}
-    \documentclass[presentation]{beamer}
-        \mode<presentation>{\usetheme{AMSBolognaFC}}
-\end{verbatim}
-%
-so as to use the AMS Bologna FC Beamer style 
-\end{block}
-%
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c,fragile]{Bibliography Style}
-%
-\begin{block}{\texttt{apalike-AMS}}
-Your main Beamer \texttt{.tex} file should include the declaration
-\begin{verbatim}
-    \bibliographystyle{apalike-AMS}
-\end{verbatim}	
-so as to use the AMS Bologna FC \BibTeX{} style 
-\end{block}
-%
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c,fragile]{Template}
-%
-\begin{block}{\texttt{AMSBolognaFC-template.tex}}
-This template's sources can be used as a simple example of how yo use this Beamer style
-\end{block}
-%
+\begin{frame}[c]{SKI workflow}
+    %
 \end{frame}
 %/////////
 
 
 %===============================================================================
-\section{Style}
+\section{Open literature research lines}
 %===============================================================================
 
+
 %/////////
-\begin{frame}[c,allowframebreaks]{Colours for AMS Bologna FC}
-%
-\begin{exampleblock}{\texttt{\textcolor{bolognafcblue}{bolognafcblue}}}
-	\begin{description}
-		\item[HEX] \texttt{\#1A2F48}
-		\item[RGB] \texttt{26,47,72}
-	\end{description}
-\end{exampleblock}
-\begin{exampleblock}{\texttt{\textcolor{bolognafcred}{bolognafcred}}}
-	\begin{description}
-		\item[HEX] \texttt{\#A21C26}
-		\item[RGB] \texttt{162,28,38}
-	\end{description}
-\end{exampleblock}
-\framebreak
-\begin{block}{\texttt{\textcolor{bolognafcwhite}{bolognafcwhite}}}
-	\begin{description}
-		\item[HEX] \texttt{\#FFFFFF}
-		\item[RGB] \texttt{255,255,255}
-	\end{description}
-\end{block}
-\begin{alertblock}{\texttt{\textcolor{bolognafcsilver}{bolognafcsilver}}}
-	\begin{description}
-		\item[HEX] \texttt{\#ECECEC}
-		\item[RGB] \texttt{236,236,236}
-	\end{description}
-\end{alertblock}
-%
+\begin{frame}[c]{SKE \& SKI}
+    %
 \end{frame}
 %/////////
 
+
 %/////////
-\begin{frame}[c,fragile]{Blocks}
-%
-\begin{block}{This is a \texttt{block} environment}
-\begin{verbatim}
-\begin{block}
-...
-\end{block}
-\end{verbatim}
-\end{block}
-%
-\begin{exampleblock}{This is an \texttt{exampleblock} environment}
-\begin{verbatim}
-\begin{exampleblock}
-...
-\end{exampleblock}
-\end{verbatim}
-\end{exampleblock}
-%
-\begin{alertblock}{This is an \texttt{alertblock} environment}
-\begin{verbatim}
-\begin{alertblock}
-...
-\end{alertblock}
-\end{verbatim}
-\end{alertblock}
-%
+\begin{frame}[c]{Other scientific fields}
+    %
 \end{frame}
 %/////////
-
-%===============================================================================
-\section{New Commands}
-%===============================================================================
-
-%/////////
-\begin{frame}[c,allowframebreaks,fragile]{Citations}
-%
-\begin{alertblock}{\texttt{\textbackslash{}ccite} command---e.g., \ccite{bibtex-patashnik88}}
-\begin{verbatim}
-\ccite{bibtex-patashnik88}
-\end{verbatim}
-\begin{itemize}
-	\item to be used instead of standard \texttt{\textbackslash{}cite} command
-	\item prints as \ccite{bibtex-patashnik88}
-	\item can be used as a note\ccite{bibtex-patashnik88}, with no space before
-\end{itemize}
-\end{alertblock}
-%
-\begin{exampleblock}{\texttt{\textbackslash{}cccite} command---e.g., \cccite{bibtex-patashnik88}}
-\begin{verbatim}
-\cccite{bibtex-patashnik88}
-\end{verbatim}
-\begin{itemize}
-	\item a lighter version of the \texttt{\textbackslash{}ccite} command over non-dark, non-light backgrounds
-	\begin{itemize}
-		\item as here above in \texttt{examplebox} header
-	\end{itemize}
-	\item can be used as a note with no space before, in the same way as \texttt{\textbackslash{}ccite}
-\end{itemize}
-\end{exampleblock}
-%
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c,fragile]{URLs}
-%
-\begin{block}{\texttt{\textbackslash{}uurl} command}
-\begin{itemize}
-	\item to be used instead of standard \texttt{\textbackslash{}url} command
-	\item[e.g.] \verb|\uurl{http://apice.unibo.it}| prints as \uurl{http://apice.unibo.it}
-\end{itemize}
-\end{block}
-%
-\begin{block}{\texttt{\textbackslash{}uuurl} command---e.g., \uuurl{http://apice.unibo.it}}
-\begin{itemize}
-	\item to be used instead of standard \texttt{\textbackslash{}url} command over dark backgrounds
-	\item[e.g.] see \verb|\uuurl{http://apice.unibo.it}| above in this \texttt{block} header
-\end{itemize}
-\end{block}
-%
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c,fragile]{Alert}
-%
-\begin{block}{\texttt{\textbackslash{}aalert} command---e.g., \aalert{alerted text}}
-\begin{itemize}
-	\item to be used instead of standard \texttt{\textbackslash{}alert} command over dark backgrounds
-	\item[e.g.] see \verb|\aalert{alerted text}| above in this \texttt{block} header
-\end{itemize}
-\end{block}
-%
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c,fragile,allowframebreaks]{Speaker(s) \emph{vs.} Authors}
-%
-\begin{exampleblock}{\texttt{\textbackslash{}speaker} command--e.g., \speaker{Diego Zorro}}
-\begin{itemize}
-	\item to be used within \texttt{\textbackslash{}author} standard \BibTeX{} command to single out the actual speaker among the authors
-	\item[e.g.] as in
-\begin{verbatim}
-	\author[Garcia \and Zorro]
-	{Sarg Garcia \and \speaker{Diego Zorro}}
-\end{verbatim}
-	\item and in the author specification of this template
-\end{itemize}
-\end{exampleblock}
-%
-\begin{block}{\texttt{\textbackslash{}sspeaker} command--e.g., \sspeaker{Diego Zorro}}
-\begin{itemize}
-	\item to be used within \texttt{\textbackslash{}author} standard \BibTeX{} command to single out the actual speaker among the authors in the short form
-	\item[e.g.] as in
-\begin{verbatim}
-	\author[Garcia \and \sspeaker{Zorro}]
-	{Sarg Garcia \and \speaker{Diego Zorro}}
-\end{verbatim}
-	\item and in the author specification of this template
-\end{itemize}
-\end{block}
-
-\end{frame}
-%/////////
-
 
 %===============================================================================
 \section*{}
