@@ -9,30 +9,7 @@
 \documentclass[presentation]{beamer}\mode<presentation>{\usetheme{AMSBolognaFC}}
 %\documentclass[handout]{beamer}\mode<handout>{\usetheme{AMSBolognaFC}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{hyperref}
-\usepackage{csquotes}
-\usepackage{cleveref}
-\crefname{item}{item}{items}
-\Crefname{Item}{Item}{Items}
-\usepackage{wasysym}
-\usepackage[ddmmyyyy]{datetime}
-\renewcommand{\dateseparator}{-}
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-% version
-\newcommand{\templatemajor}{1}
-\newcommand{\templateminor}{4}
-\newcommand{\templatepatch}{20220217}
-\newcommand{\templateversion}{\templatemajor.\templateminor.\templatepatch}
-\newcommand{\argmin}[2]{\underset{#1}{\text{argmin}} \left\{ #2 \right\}}
-\newcommand{\argmax}[2]{\underset{#1}{\text{argmax}} \left\{ #2 \right\}}
-\newcommand{\unify}[2]{\text{unify}(#1, #2)}
-\newcommand{\mgu}[2]{\text{mgu}(#1, #2)}
-\newcommand{\functor}[1]{\mathtt{#1}}
-\newcommand{\variable}[1]{\mathit{#1}}
-\newcommand{\predication}[1]{\mathit{#1}}
-\newcommand{\consdot}{\functor{~.~}}
+\usepackage{ski-presentation-2022}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[SKI: Symbolic Knowledge Injection]
 {SKI: Symbolic Knowledge Injection}
@@ -48,6 +25,28 @@
 %
 \date[\today]{\today}
 %
+
+\AtBeginSection[]
+{
+    %\\\\\\\\\\\\\\\\\\\\\
+    \begin{frame}<beamer>[c,noframenumbering]
+        \frametitle{Next in Line\ldots}
+        \tableofcontents[sectionstyle=show/shaded,subsectionstyle=hide]
+    \end{frame}
+    %\\\\\\\\\\\\\\\\\\\\\
+}
+\AtBeginSubsection[]
+{
+    %\\\\\\\\\\\\\\\\\\\\\
+    \begin{frame}<beamer>[shrink,noframenumbering]
+        \frametitle{Focus on\ldots}
+        \mbox{~}
+        \tableofcontents[currentsubsection,sectionstyle=shaded,subsectionstyle=show/shaded]
+        \mbox{~}
+    \end{frame}
+    %\\\\\\\\\\\\\\\\\\\\\
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,7 +92,6 @@ We define symbolic knowledge injection as:
         \begin{itemize}
             \item[$\Rightarrow$] Symbolic knowledge is both human and machine interpretable,
             \item first order logic (FOL) is an example of symbolic representation.
-            %
         \end{itemize}
     \end{enumerate}
     
@@ -279,7 +277,35 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Logics}
+\begin{frame}[c]{Logic}
+    \begin{block}{Intensional}
+        \begin{itemize}
+            \item indirect representation of data,
+            %
+            \item define a relation/set by describing its elements via other relations/sets.
+        \end{itemize}
+        %
+    \end{block}
+    %
+    \begin{block}{Extensional}
+        \begin{itemize}
+            \item direct representation of data,
+            %
+            \item explicit definition of entities involved.
+        \end{itemize}
+    \end{block}
+    %
+    \vfill
+    %
+    Recursive intensional predicates are very expressive and powerful, as they enable the description of infinite sets via a finite (and commonly small) amount of formul\ae.
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Logic}
+    %
+    Almost the totality of SKI algorithms deal with:
     %
     \begin{itemize}
         \item first order logic (FOL);
@@ -294,7 +320,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{FOL}
+\begin{frame}[c]{Logic: FOL}
     \begin{itemize}
         \item FOL is extremely flexible and expressive;
         \item you can use recursion and define recursive structures;
@@ -314,7 +340,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{FOL}
+\begin{frame}[c]{Logic: FOL}
     \begin{itemize}
         \item FOL is extremely flexible and expressive;
         \item you can use recursion and define recursive structures;
@@ -334,7 +360,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{KG}
+\begin{frame}[c]{Logic: KG}
     %
     \begin{itemize}
         \item Only constants, variables and n-ary predicates with $n < 3$;
@@ -346,18 +372,29 @@ We define symbolic knowledge injection as:
         \end{itemize}
         \item may instantiate an ontology, i.e., a formal description of classes characterising a given domain.
     \end{itemize}
-    
 \end{frame}
 %/////////
 
 %/////////
-\begin{frame}[c]{PL}
+\begin{frame}[c]{Logic: KG}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kg-example}
+    \end{figure}    
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Logic: PL}
     %
     \begin{itemize}
         \item No quantifiers, terms, and non-atomic predicates;
         \item expressions involving one or many 0-ary predicates (propositions) possibly interconnected by ordinary logic connectives;
         \item low expressiveness, but easy to work with.
     \end{itemize}
+    %
+    \vfill\centering
+    $p \wedge \neg q \rightarrow r$
 \end{frame}
 %/////////
 
@@ -380,16 +417,106 @@ We define symbolic knowledge injection as:
 %/////////
 
 %===============================================================================
-\section{PSyKI}
+\section{\psyki}
 %===============================================================================
 
 
 %/////////
-\begin{frame}[c]{SKI workflow}
-    %
+\begin{frame}{General SKI workflow}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textheight]{figures/ski-workflow.pdf}
+    \end{figure}
+    
 \end{frame}
 %/////////
 
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}{1 -- Parsing}
+    
+    \begin{minipage}{0.5\textwidth}
+        \begin{equation*}
+            \begin{split}
+                class&(X_{-30}, \dots, X_{30}, ie) \leftarrow\\
+                &\textit{pyramidine-rich}(\dots)\ \wedge\\
+                &X_{-3} = y\ \wedge\\
+                &X_{-2} = a\ \wedge\\
+                &X_{-1} = g\ \wedge\\
+                &X_{1} = g\ \wedge\\
+                &\neg(\textit{ie-stop}(\dots)) 
+            \end{split}
+        \end{equation*}
+    \end{minipage}
+    \noindent\begin{minipage}{0.4\textwidth}% adapt widths of minipages to your needs
+        \includegraphics[width=\linewidth]{figures/ast-ie-1.pdf}
+    \end{minipage}%
+    
+    
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}{2 -- Fuzzification}
+    
+    \begin{minipage}{0.6\textwidth}
+        \input{tables/fuzzification}
+        
+        \begin{center}\scriptsize
+            $^{*}$ encodes the value for the $i^{th}$ output
+            \\
+            \smallskip
+            $^{**}$ assuming $p$ is defined by $k$ clauses of the form:
+            \\
+            $\pred{p}(\bar{X}) \leftarrow \psi_1,\ \ldots,\ \pred{p}(\bar{X}) \leftarrow \psi_k$
+        \end{center}
+    \end{minipage}
+    %
+    \begin{minipage}{0.35\textwidth}
+        \begin{equation*}
+            \begin{split}
+                class&(X_{-30}, \dots, X_{30}, ie) \leftarrow\\
+                &X_{-3} = y\ \wedge\\
+                &X_{-2} = a\ \wedge\\
+                &X_{-1} = g\ \wedge\\
+                &X_{1} = g
+            \end{split}
+        \end{equation*}
+        %
+        \centering
+        $\downarrow$
+        \begin{equation*}
+            \begin{split}
+                min\{&min\{min\{1-|X_{-3} - y|,\\
+                &\phantom{min\{min\{}1-|X_{-2} - a|\},\\
+                &\phantom{min\{}1-|X_{-1} - g|\},\\
+                &1-|X_{1}-g|\}
+            \end{split}
+        \end{equation*}
+    \end{minipage}
+    
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+%/////////
+\begin{frame}[c]{3 -- Injection}
+    %
+    Injection step is algorithm specific but it falls back into the three following approaches already discussed:
+    \begin{block}{Injection families}
+        \begin{itemize}
+            \item constraining;
+            \item structuring;
+            \item embedding.
+        \end{itemize}
+    \end{block}
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{4 -- Training}
+    %
+\end{frame}
+%/////////
 
 %===============================================================================
 \section{Open literature research lines}
