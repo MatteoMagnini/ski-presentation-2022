@@ -73,7 +73,7 @@
 We define symbolic knowledge injection as:
 %
 \begin{displayquote}\itshape
-    any \emph{algorithmic} procedure affecting how \textcolor{bolognafcred}{sub-symbolic predictors} draw their inferences in such a way that predictions are either \emph{computed} as a function of, or made \emph{consistent} with, some \emph{given} \textcolor{bolognafcred}{symbolic knowledge}.
+    any \emph{algorithmic} procedure affecting how \alert{sub-symbolic predictors} draw their inferences in such a way that predictions are either \emph{computed} as a function of, or made \emph{consistent} with, some \emph{given} \alert{symbolic knowledge}.
 \end{displayquote}
 %
 \end{frame}
@@ -82,7 +82,7 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Symbolic Knowledge}
     %
-    A symbolic representation consists of:
+    A symbolic representation consists of: \ccite{sub-symbolic-vs-symbolic}
     %
     \begin{enumerate}
         \item a set of symbols;
@@ -113,6 +113,32 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
+\begin{frame}[c]{Local vs distributed}
+    %
+    When data are a numeric arrays:
+    %
+    \begin{block}{Local representation}
+        \begin{itemize}
+            \item Each number of the array has a well-defined meaning;
+            %
+            \item example $\rightarrow$ a one-hot encoding array to represent a set of classes.
+        \end{itemize}    
+    \end{block}
+    
+    \begin{block}{Distributed representation}
+        \begin{itemize}
+            \item Each number of the array is meaningless, unless it is considered along with its neighbourhood;
+            %
+            \item example $\rightarrow$ images represented as $w\ x\ h$ matrices of numbers in range $[0,1]$.
+            %
+            (Violation of \cref{item:symbolic-assignment})
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+%/////////
+
+%/////////
 \begin{frame}[c]{Sub-symbolic predictors}
     %
     \begin{itemize}
@@ -122,7 +148,7 @@ We define symbolic knowledge injection as:
             \item recurrent neural networks (RNN);
         \end{itemize}
         \item kernel machines;
-        \item others.
+        \item basically everything that is sub-symbolic.
     \end{itemize}
     %
     \vfill
@@ -136,18 +162,50 @@ We define symbolic knowledge injection as:
     %
     There are several benefits:
     %
-\begin{itemize}
-    \item reduce learning time;
+    \begin{itemize}
+        %
+        \item prevent the predictor to become a black-box\alert{!};
+        %
+        \item reduce learning time;
+        %
+        \item reduce the data size needed for training;
+        %
+        \item improve predictor's accuracy;
+        %
+        \item build a predictor that behave as a logic engine.
+    \end{itemize}
     %
-    \item reduce the data size needed for training;
-    %
-    \item improve predictor's accuracy;
-    %
-    \item build a predictor that behave as a logic engine.
-\end{itemize}
-%
 \end{frame}
 %/////////
+
+%/////////
+\begin{frame}[c]{XAI}
+    %
+    Explainability can be achieved:
+    %
+    \begin{block}{Post-hoc explanation}
+        \begin{itemize}
+            \item applying an algorithm of symbolic knowledge extraction on a trained predictor;
+            %
+            \item output $\rightarrow$ logic rules that describe the predictor's behaviour.
+            %
+        \end{itemize}    
+    \end{block}
+    
+    \begin{block}{By design}
+        \begin{itemize}
+            \item constraining the behaviour of predictors that are natively black-boxes with symbolic knowledge;
+            %
+            \item structuring the predictor's architecture with symbolic knowledge;
+            %
+            \item output $\rightarrow$ a predictor that does not violate the prior knowledge.
+        \end{itemize}
+    \end{block}
+    
+\end{frame}
+%/////////
+
+
 
 
 %===============================================================================
@@ -182,13 +240,9 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{Predictors}
     %
-    \begin{itemize}
-        \item theoretically, one can inject prior knowledge into any sub-symbolic predictor;
-        %
-        \item in practice, NN are almost the sole predictors treated in literature;
-        %
-        \item however, lot of different NN architecture are considered.
-    \end{itemize}
+    Theoretically, one can inject prior knowledge into any sub-symbolic predictor.
+    %
+    In practice, NN are almost the sole predictors treated in literature, however, lot of different NN architecture are considered.
     %
     \begin{figure}
         \centering
@@ -199,14 +253,31 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
+\begin{frame}[c]{Predictors}
+    %
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/cnn-architecture}
+    \end{figure}
+    %
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/rnn-architecture}
+    \end{figure}
+    %
+\end{frame}
+%/////////
+
+
+%/////////
 \begin{frame}[c]{How}
     %
     There exist three major ways to perform knowledge injection on sub-symbolic predictors:
     %
     \begin{itemize}
-        \item constraining, a cost factor proportional to the violation of the knowledge is introduced during learning;
-        \item structuring, the architecture of the predictor is built in such a way to mimic the knowledge;
-        \item embedding, the symbolic knowledge is embedded into a tensor form and it is given in input as training data to the predictor.
+        \item \alert{constraining}, a cost factor proportional to the violation of the knowledge is introduced during learning;
+        \item \alert{structuring}, the architecture of the predictor is built in such a way to mimic the knowledge;
+        \item \alert{embedding}, the symbolic knowledge is embedded into a tensor form and it is given in input as training data to the predictor.
    \end{itemize} 
     %
 \end{frame}
@@ -308,11 +379,11 @@ We define symbolic knowledge injection as:
     Almost the totality of SKI algorithms deal with:
     %
     \begin{itemize}
-        \item first order logic (FOL);
+        \item \alert{first order logic} (FOL);
         %
-        \item knowledge graph (KG);
+        \item \alert{knowledge graph} (KG);
         %
-        \item propositional logic (PL).
+        \item \alert{propositional logic} (PL).
         
     \end{itemize}
     %
@@ -360,6 +431,24 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
+\begin{frame}[c]{Logic: FOL}
+    \begin{equation*}
+        \begin{aligned}
+            \pred{parent}(\const{abraham},\const{isaac}). &\phantom{\rightarrow} \pred{male}(\const{abraham}).\\
+            \pred{parent}(\const{sarah},\const{isaac}). &\phantom{\rightarrow} \pred{female}(\const{sarah}).\\
+            \pred{parent}(\const{isaac},\const{jacob}). &\phantom{\rightarrow} \pred{male}(\const{isaac}).\\
+            \pred{parent}(\const{rebekah},\const{jacob}). &\phantom{\rightarrow} \pred{female}(\const{rebekah}).\\
+            \dots &\phantom{\rightarrow} \pred{male}(\const{jacob}).\\
+            \forall\var{X} \forall\var{Y} \pred{parent}(\const{\var{X}},\var{Y}) &\rightarrow \pred{child}(\var{Y},\var{X}).\\
+            \forall\var{X} \forall\var{Y} \pred{parent}(\const{\var{X}},\var{Y}) \wedge \pred{male}(\var{X}) &\rightarrow \pred{father}(\var{X},\var{Y}).\\
+            \forall\var{X} \forall\var{Y} \pred{parent}(\const{\var{X}},\var{Y}) \wedge \pred{female}(\var{X}) &\rightarrow \pred{mother}(\var{X},\var{Y}).\\
+            \forall\var{X} \forall\var{Y} \exists\var{Z} \pred{parent}(\const{\var{X}},\var{Z}) \wedge \pred{parent}(\var{Z},\var{Y}) &\rightarrow \pred{grandparent}(\var{X},\var{Y}).\\
+        \end{aligned}    
+    \end{equation*}
+\end{frame}
+%/////////
+
+%/////////
 \begin{frame}[c]{Logic: KG}
     %
     \begin{itemize}
@@ -367,8 +456,8 @@ We define symbolic knowledge injection as:
         \item collections of triplets $\langle \functor{a}\ \predication{f}\ \functor{b} \rangle$ or $\predication{f}(\functor{a}, \functor{b})$
         \item essentially directed graph:
         \begin{itemize}
-            \item nodes $\Rightarrow$ individuals,
-            \item vertices $\Rightarrow$ properties connecting individuals;
+            \item nodes $\rightarrow$ individuals,
+            \item vertices $\rightarrow$ properties connecting individuals;
         \end{itemize}
         \item may instantiate an ontology, i.e., a formal description of classes characterising a given domain.
     \end{itemize}
@@ -394,7 +483,24 @@ We define symbolic knowledge injection as:
     \end{itemize}
     %
     \vfill\centering
-    $p \wedge \neg q \rightarrow r$
+    \begin{equation*}
+        \begin{aligned}
+            \pred{big\_petal}\wedge\pred{average\_sepal}&\rightarrow\const{virginica}.\\
+            \pred{big\_petal}\wedge\neg\pred{average\_sepal}&\rightarrow\const{versicolor}.\\
+            \pred{big\_petal}&\rightarrow\const{setosa}. 
+        \end{aligned}    
+    \end{equation*}
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[c]{Logic: PL}
+    %
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/iris-dataset}
+    \end{figure}
+
 \end{frame}
 %/////////
 
@@ -501,7 +607,7 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{3 -- Injection}
     %
-    Injection step is algorithm specific but it falls back into the three following approaches already discussed:
+    Injection step is algorithm specific but it falls back into the three approaches already discussed:
     \begin{block}{Injection families}
         \begin{itemize}
             \item constraining;
@@ -557,7 +663,7 @@ We define symbolic knowledge injection as:
 	\scriptsize
 %	\footnotesize
 	\bibliographystyle{apalike-AMS}
-	\bibliography{AMSBolognaFC-template}
+	\bibliography{ski-presentation-2022}
 \end{frame}
 %/////////
 
