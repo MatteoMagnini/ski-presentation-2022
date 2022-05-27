@@ -121,7 +121,7 @@ We define symbolic knowledge injection as:
         \begin{itemize}
             \item Each number of the array has a well-defined meaning;
             %
-            \item example $\rightarrow$ a one-hot encoding array to represent a set of classes.
+            \item example $\rightarrow$ iris dataset sample, array with 5 elements where each element has meaning (sepal/petal length/width and class).
         \end{itemize}    
     \end{block}
     
@@ -238,7 +238,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Predictors}
+\begin{frame}[allowframebreaks]{Predictors}
     %
     Theoretically, one can inject prior knowledge into any sub-symbolic predictor.
     %
@@ -249,12 +249,9 @@ We define symbolic knowledge injection as:
         \includegraphics[width=.6\linewidth]{figures/neuron.png}
     \end{figure}
     %
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Predictors}
-    %
+    
+    \framebreak
+    
     \begin{figure}
         \centering
         \includegraphics[width=0.8\textwidth]{figures/cnn-architecture}
@@ -284,7 +281,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Constraining}
+\begin{frame}[allowframebreaks]{Constraining}
     %
     \begin{itemize}
         \item Knowledge cost factor is introduced in the loss function;
@@ -292,7 +289,7 @@ We define symbolic knowledge injection as:
         \item for NN the cost affects backpropagation during training.
         %
         \begin{itemize}
-            \item[$\Rightarrow$] Predictor does not violate the prior knowledge (to a certain extent)
+            \item[$\Rightarrow$] Predictor does not violate the prior knowledge (to a certain extent).
         \end{itemize} 
     \end{itemize}
     
@@ -301,11 +298,25 @@ We define symbolic knowledge injection as:
         \includegraphics[width=0.6\textwidth]{figures/ski-constraining}
     \end{figure}
     %
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/nn-backprop.png}
+    \end{figure}
+
+    \framebreak
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/nn-gradient-descent.png}
+    \end{figure}    
 \end{frame}
 %/////////
 
 %/////////
-\begin{frame}[c]{Structuring}
+\begin{frame}[allowframebreaks]{Structuring}
     %
     \begin{itemize}
         \item Inner architecture is shaped to be able to ``mimic'' the knowledge;
@@ -316,13 +327,35 @@ We define symbolic knowledge injection as:
             \item[$\Rightarrow$] Predictor directly exploits knowledge when needed.
         \end{itemize} 
     \end{itemize}
-    
+    %
     \begin{figure}
         \centering
         \includegraphics[width=0.7\textwidth]{figures/ski-structuring}
     \end{figure}
     %
+    
+    \framebreak
+    
+   \begin{itemize}
+       \item We need to define a mapping from crispy logic rules into fuzzy continuous interpretations;
+       %
+       \item then we need to map the interpretations into ad-hoc neurons/layers.
+   \end{itemize}   
+
+    \framebreak
+    
+    \begin{equation*}
+        \begin{aligned}
+            \var{A}&\leftarrow\var{B}\wedge\var{C}\wedge\neg\var{D}.\\
+            \var{A}&\leftarrow\var{E}\wedge\var{F}.\\
+            \var{B}&\leftarrow\const{true}.\\
+        \end{aligned}    
+    \end{equation*}
     %
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.5\textheight]{figures/structuring-example}
+    \end{figure}
 \end{frame}
 %/////////
 
@@ -348,7 +381,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Logic}
+\begin{frame}[allowframebreaks]{Logic}
     \begin{block}{Intensional}
         \begin{itemize}
             \item indirect representation of data,
@@ -365,17 +398,11 @@ We define symbolic knowledge injection as:
             \item explicit definition of entities involved.
         \end{itemize}
     \end{block}
-    %
-    \vfill
-    %
+    
     Recursive intensional predicates are very expressive and powerful, as they enable the description of infinite sets via a finite (and commonly small) amount of formul\ae.
-    %
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic}
-    %
+    
+    \framebreak        
+    
     Almost the totality of SKI algorithms deal with:
     %
     \begin{itemize}
@@ -386,12 +413,9 @@ We define symbolic knowledge injection as:
         \item \alert{propositional logic} (PL).
         
     \end{itemize}
-    %
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: FOL}
+    
+    \framebreak
+    
     \begin{itemize}
         \item FOL is extremely flexible and expressive;
         \item you can use recursion and define recursive structures;
@@ -402,16 +426,14 @@ We define symbolic knowledge injection as:
             \item how can you support recursion?  
         \end{itemize}
     \end{itemize}
-    \centering\vfill
+    \centering
     %
     \phantom{You can't!}
     %
     \phantom{Unless you use some tricks.}
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: FOL}
+    
+    \framebreak
+    
     \begin{itemize}
         \item FOL is extremely flexible and expressive;
         \item you can use recursion and define recursive structures;
@@ -422,16 +444,14 @@ We define symbolic knowledge injection as:
             \item how can you support recursion?  
         \end{itemize}
     \end{itemize}
-    \centering\vfill
+    \centering
     %
     You can't!
     %
     Unless you use some tricks.
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: FOL}
+    
+    \framebreak
+    
     \begin{equation*}
         \begin{aligned}
             \pred{parent}(\const{abraham},\const{isaac}). &\phantom{\rightarrow} \pred{male}(\const{abraham}).\\
@@ -445,12 +465,9 @@ We define symbolic knowledge injection as:
             \forall\var{X} \forall\var{Y} \exists\var{Z} \pred{parent}(\const{\var{X}},\var{Z}) \wedge \pred{parent}(\var{Z},\var{Y}) &\rightarrow \pred{grandparent}(\var{X},\var{Y}).\\
         \end{aligned}    
     \end{equation*}
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: KG}
-    %
+    
+    \framebreak
+    
     \begin{itemize}
         \item Only constants, variables and n-ary predicates with $n < 3$;
         \item collections of triplets $\langle \functor{a}\ \predication{f}\ \functor{b} \rangle$ or $\predication{f}(\functor{a}, \functor{b})$
@@ -461,41 +478,35 @@ We define symbolic knowledge injection as:
         \end{itemize}
         \item may instantiate an ontology, i.e., a formal description of classes characterising a given domain.
     \end{itemize}
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: KG}
+    
+    \framebreak
+    
     \begin{figure}
         \centering
         \includegraphics[width=0.8\textwidth]{figures/kg-example}
     \end{figure}    
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: PL}
-    %
+    
+    \framebreak
+    
     \begin{itemize}
         \item No quantifiers, terms, and non-atomic predicates;
         \item expressions involving one or many 0-ary predicates (propositions) possibly interconnected by ordinary logic connectives;
         \item low expressiveness, but easy to work with.
     \end{itemize}
     %
-    \vfill\centering
+    \centering
     \begin{equation*}
         \begin{aligned}
             \pred{big\_petal}\wedge\pred{average\_sepal}&\rightarrow\const{virginica}.\\
             \pred{big\_petal}\wedge\neg\pred{average\_sepal}&\rightarrow\const{versicolor}.\\
-            \pred{big\_petal}&\rightarrow\const{setosa}. 
+            \pred{big\_petal}&\rightarrow\const{setosa}.\\
+            \pred{average\_sepal}&\equiv(3\le\var{SepalWidth}<5)\\
+            \pred{big\_petal}&\equiv(\var{PetalLength}>3)\\
         \end{aligned}    
     \end{equation*}
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}[c]{Logic: PL}
-    %
+    
+    \framebreak
+    
     \begin{figure}
         \centering
         \includegraphics[width=0.6\textwidth]{figures/iris-dataset}
@@ -510,15 +521,95 @@ We define symbolic knowledge injection as:
 %===============================================================================
 
 %/////////
-\begin{frame}[c]{First works}
+\begin{frame}[c]{Notable works}
+    %
+    \begin{block}{KBANN: Knowledge Base Artificial Neural Network \ccite{KBANN-origin}}
+        %
+        It is one of the first works in SKI.
+        %
+        Authors inject prior knowledge into a NN and validate their method on real world biological datasets.
+        %
+        \begin{itemize}
+            %
+            \item aim $\rightarrow$ enrich;
+            %
+            \item predictor $\rightarrow$ neural network;
+            %
+            \item how $\rightarrow$ structuring and constraining;
+            %
+            \item logic $\rightarrow$ propositional.
+            %    
+        \end{itemize}        
+    \end{block}
     %
 \end{frame}
 %/////////
 
+%/////////
+\begin{frame}[allowframebreaks]{KBANN}
+    \begin{block}{Algprithm}
+        \begin{enumerate}
+            \item rewrite rules so that disjuncts are expressed as a set of rules that each have only one antecedent;
+            %
+            \item directly map the rule structure into a neural network;
+            %
+            \item label units in the KBANN-net according to their ``level'';
+            %
+            \item add hidden units to the network at user-specified levels (optional);
+            %
+            \item add units for known input features that are not referenced in the rules;
+            %
+            \item add links not specified by translation between all units in topologically-contiguous levels;
+            %
+            \item Perturb the network by adding near-zero random numbers to all link weights and biases.
+        \end{enumerate}
+    \end{block}
+
+    \framebreak
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/kbann-algorithm.png}
+    \end{figure}
+
+    \framebreak
+    
+    \begin{equation*}
+        \begin{aligned}
+            \textit{Error}&= - \sum_{i=1}^{n}{[(1-d_{i})*\log_{2}{(1-a_{i})} + d_{i}*\log_{2}{(a_{i})}]}\\
+            \textit{Regularizer}&=\lambda\sum_{i\in\omega}{\frac{(\omega_{i} - \omega_{init_{i}})^{2}}{1+(\omega_{i}- \omega_{init_{i}})^{2}}}
+        \end{aligned}
+    \end{equation*}
+\end{frame}
+%/////////
 
 %/////////
-\begin{frame}[c]{Notable works}
+\begin{frame}[allowframebreaks]{FANN}
     %
+    \begin{block}{FANN: Fibred Artificial Neural Network \ccite{FANN-theory,BaderFlairs2005}}
+        %
+        Authors present an interesting approach to deal with FOL in NN.
+        %
+        \begin{itemize}
+            %
+            \item aim $\rightarrow$ manifold;
+            %
+            \item predictor $\rightarrow$ neural network;
+            %
+            \item how $\rightarrow$ structuring;
+            %
+            \item logic $\rightarrow$ first order logic.
+            %    
+        \end{itemize}        
+    \end{block}
+    %
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}{FANN}
+    %
+
 \end{frame}
 %/////////
 
