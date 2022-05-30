@@ -69,13 +69,17 @@
 
 %/////////
 \begin{frame}[c]{Definition}
-%
-We define symbolic knowledge injection as:
-%
-\begin{displayquote}\itshape
-    any \emph{algorithmic} procedure affecting how \alert{sub-symbolic predictors} draw their inferences in such a way that predictions are either \emph{computed} as a function of, or made \emph{consistent} with, some \emph{given} \alert{symbolic knowledge}.
-\end{displayquote}
-%
+    %
+    We define symbolic knowledge injection as:
+    %
+    \begin{displayquote}\itshape
+        any \emph{algorithmic} procedure affecting how \alert{sub-symbolic predictors} draw their inferences in such a way that predictions are either \emph{computed} as a function of, or made \emph{consistent} with, some \emph{given} \alert{symbolic knowledge}.
+    \end{displayquote}*
+    %
+    \vfill
+    %
+    * a wide definition that includes the vast majority of the works surveyed in \ccite{surveyNeuroSymb,surveyXie,surveyCalegariCO20}.
+
 \end{frame}
 %/////////
 
@@ -139,7 +143,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Sub-symbolic predictors}
+\begin{frame}[allowframebreaks]{Sub-symbolic predictors}
     %
     \begin{itemize}
         \item deep neural networks (DNN);
@@ -151,9 +155,20 @@ We define symbolic knowledge injection as:
         \item basically everything that is sub-symbolic.
     \end{itemize}
     %
-    \vfill
-    %
     The vast majority of predictors are NN most probably because they are easy to manipulate and they have top performances.
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \subfloat{\includegraphics[width=0.4\textwidth]{figures/nn-iris.png}}
+        %
+        \qquad
+        %
+        \centering
+        \subfloat{\includegraphics[width=0.4\textwidth]{figures/decision-tree-iris.png}}
+    \end{figure}
+    
 \end{frame}
 %/////////
 
@@ -179,7 +194,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{XAI}
+\begin{frame}[c]{Explainable Artificial Intelligence \ccite{darpa2016-xai}}
     %
     Explainability can be achieved:
     %
@@ -286,7 +301,7 @@ We define symbolic knowledge injection as:
     \begin{itemize}
         \item Knowledge cost factor is introduced in the loss function;
         %
-        \item for NN the cost affects backpropagation during training.
+        \item for NN the cost affects backpropagation \ccite{backpropagation} during training.
         %
         \begin{itemize}
             \item[$\Rightarrow$] Predictor does not violate the prior knowledge (to a certain extent).
@@ -360,7 +375,7 @@ We define symbolic knowledge injection as:
 %/////////
 
 %/////////
-\begin{frame}[c]{Embedding}
+\begin{frame}[allowframebreaks]{Embedding}
     %
     \begin{itemize}
         \item Symbolic knowledge is embedded into a tensor form;
@@ -377,6 +392,33 @@ We define symbolic knowledge injection as:
         \includegraphics[width=0.7\textwidth]{figures/ski-embedding}
     \end{figure}
     %
+    \framebreak
+    %
+    \begin{itemize}
+        \item Knowledge graph embedding \ccite{kge-survey};
+        %
+        \item entities and relations are embedded into continuos vector spaces;
+        %
+        \item scoring function $f_{r}(h,t)$ defined on each fact $(h, r, t)$ to measure its plausibility;
+    \end{itemize}
+    %
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kge-space.png}
+    \end{figure}
+
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kge-nn-1.png}
+    \end{figure}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kge-nn-2.png}
+    \end{figure}
+    
 \end{frame}
 %/////////
 
@@ -413,9 +455,11 @@ We define symbolic knowledge injection as:
         \item \alert{propositional logic} (PL).
         
     \end{itemize}
+\end{frame}
+%/////////
     
-    \framebreak
-    
+%/////////
+\begin{frame}[allowframebreaks]{First Order Logic}
     \begin{itemize}
         \item FOL is extremely flexible and expressive;
         \item you can use recursion and define recursive structures;
@@ -465,8 +509,11 @@ We define symbolic knowledge injection as:
             \forall\var{X} \forall\var{Y} \exists\var{Z} \pred{parent}(\const{\var{X}},\var{Z}) \wedge \pred{parent}(\var{Z},\var{Y}) &\rightarrow \pred{grandparent}(\var{X},\var{Y}).\\
         \end{aligned}    
     \end{equation*}
-    
-    \framebreak
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[allowframebreaks]{Knowledge Graph}
     
     \begin{itemize}
         \item Only constants, variables and n-ary predicates with $n < 3$;
@@ -485,9 +532,11 @@ We define symbolic knowledge injection as:
         \centering
         \includegraphics[width=0.8\textwidth]{figures/kg-example}
     \end{figure}    
+\end{frame}    
+%/////////
     
-    \framebreak
-    
+%/////////
+\begin{frame}[allowframebreaks]{Propositional Logic}
     \begin{itemize}
         \item No quantifiers, terms, and non-atomic predicates;
         \item expressions involving one or many 0-ary predicates (propositions) possibly interconnected by ordinary logic connectives;
@@ -590,6 +639,8 @@ We define symbolic knowledge injection as:
         %
         Authors present an interesting approach to deal with FOL in NN.
         %
+        The key idea is to allow single neurons to behave like entire embedded networks according to a fibring function $\phi$.
+        %
         \begin{itemize}
             %
             \item aim $\rightarrow$ manifold;
@@ -602,21 +653,20 @@ We define symbolic knowledge injection as:
             %    
         \end{itemize}        
     \end{block}
-    %
-\end{frame}
-%/////////
-
-%/////////
-\begin{frame}{FANN}
-    %
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.8\textheight]{figures/fibring-example.png}
+    \end{figure}
 
 \end{frame}
 %/////////
 
 %===============================================================================
-\section{\psyki}
+\section{\longpsyki}
 %===============================================================================
-
 
 %/////////
 \begin{frame}{General SKI workflow}
@@ -629,7 +679,7 @@ We define symbolic knowledge injection as:
 \end{frame}
 %/////////
 
-%\\\\\\\\\\\\\\\\\\\\\
+%\\\\\\\\
 \begin{frame}{1 -- Parsing}
     
     \begin{minipage}{0.5\textwidth}
@@ -646,7 +696,7 @@ We define symbolic knowledge injection as:
         \end{equation*}
     \end{minipage}
     \noindent\begin{minipage}{0.4\textwidth}% adapt widths of minipages to your needs
-        \includegraphics[width=\linewidth]{figures/ast-ie-1.pdf}
+        \includegraphics[width=\linewidth]{figures/ast-ie-1.png}
     \end{minipage}%
     
     
@@ -706,14 +756,182 @@ We define symbolic knowledge injection as:
             \item embedding.
         \end{itemize}
     \end{block}
+    %
+    We will see some examples later.
 \end{frame}
 %/////////
 
 %/////////
 \begin{frame}[c]{4 -- Training}
     %
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/training-workflow.png}
+    \end{figure}
 \end{frame}
 %/////////
+
+
+%/////////
+\begin{frame}[allowframebreaks]{Overall Design}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/psyki-design}
+    \end{figure}
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.8\textheight]{figures/psyki-class-diagram}
+    \end{figure}
+    
+    \framebreak
+    
+    \begin{block}{Key components}
+        \begin{itemize}
+            \item\alert{injector}: an entity capable of injecting symbolic knowledge into sub-symbolic predictors;
+            %
+            \item\alert{predictor}: a classifier/regressor;
+            %
+            \item\alert{formula}: a visitable data structure representing a logic rule;
+            %
+            \item\alert{fuzzifier}: an entity that embed a crisp formula into a fuzzy continuous interpretation object.
+        \end{itemize}
+    \end{block}
+\end{frame}
+%/////////
+
+
+%/////////
+\begin{frame}[allowframebreaks]{Knowledge Injection via Network Structuring}
+    
+    \begin{block}{KINS: Knowledge Injection via Network Structuring}
+        %
+        A general SKI algorithm that does not impose constrains on the sub-symbolic predictor to enrich.
+        %
+        \begin{itemize}
+            %
+            \item aim $\rightarrow$ enrich;
+            %
+            \item predictor $\rightarrow$ neural network;
+            %
+            \item how $\rightarrow$ structuring;
+            %
+            \item logic $\rightarrow$ stratified Datalog with negation.
+            %    
+        \end{itemize}        
+    \end{block}
+
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kins-architecture}
+    \end{figure}
+
+    \framebreak
+    
+    \input{tables/kins-fuzzification}
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/kins-fuzzifier-modules}
+    \end{figure}
+
+    \framebreak
+    
+    \lstinputlisting[
+        language=Python,
+        basicstyle=\ttfamily\tiny,
+        label=lst:code,
+        captionpos=b,
+    ]{listings/kins-snippet.py}
+    
+\end{frame}
+%/////////
+
+%/////////
+\begin{frame}[fragile,allowframebreaks]{Case study}
+    %
+    PSJGS: Primate Splice-Junction Gene Sequences dataset
+    %
+    \begin{minipage}{0.5\textwidth}
+        \begin{lstlisting}[language={}, basicstyle=\ttfamily\tiny,frame=none]
+    EI-stop ::- @-3 'TAA'.
+    EI-stop ::- @-3 'TAG'.
+    EI-stop ::- @-3 'TGA'.
+    EI-stop ::- @-4 'TAA'.
+    EI-stop ::- @-4 'TAG'.
+    EI-stop ::- @-4 'TGA'.
+    EI-stop ::- @-5 'TAA'.
+    EI-stop ::- @-5 'TAG'.
+    EI-stop ::- @-5 'TGA'.
+    
+    IE-stop ::- @1 'TAA'.
+    IE-stop ::- @1 'TAG'.
+    IE-stop ::- @1 'TGA'.
+    IE-stop ::- @2 'TAA'.
+    IE-stop ::- @2 'TAG'.
+    IE-stop ::- @2 'TGA'.
+    IE-stop ::- @3 'TAA'.
+    IE-stop ::- @3 'TAG'.
+    IE-stop ::- @3 'TGA'.
+    
+    pyramidine-rich :- 6 of (@-15 'YYYYYYYYYY').
+    
+    EI :- @-3 'MAGGTRAGT', not(EI-stop).
+    
+    IE :- pyramidine-rich, @-3 'YAGG', not(IE-stop).
+        \end{lstlisting}
+    \end{minipage}
+    \vline
+    \begin{minipage}{0.45\textwidth}
+        \begin{lstlisting}[language={}, basicstyle=\ttfamily\tiny,frame=none]           
+    Class, Id, DNA-sequence
+    
+    EI,ATRINS-DONOR-521,CCAGCTGCAT...AGCCAGTCTG
+    EI,ATRINS-DONOR-905,AGACCCGCCG...GTGCCCCCGC
+    EI,BABAPOE-DONOR-30,GAGGTGAAGG...CACGGGGATG
+    ...
+    IE,ATRINS-ACCEPTOR-701,TTCAGCGGCC...GCCCTGTGGA
+    IE,ATRINS-ACCEPTOR-1678,GGACCTGCTC...GGGGGCTCTA
+    IE,BABAPOE-ACCEPTOR-801,GCGGTTGATT...AAGATGAAGG
+    ...
+    N,AGMKPNRSB-NEG-1,CAAAAGAACA...CAAGGCTACA
+    N,AGMORS12A-NEG-181,AGGGAGGTGT...GGGCATGGGG
+    N,AGMORS9A-NEG-481,TGGTCAATTC...TCTTGCTCTG
+    ...
+    
+    3190 Records
+        \end{lstlisting}
+    \end{minipage}
+
+    \framebreak
+    
+    \input{tables/dna-rules}
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/dna-rules-confusion-matrix}
+    \end{figure}
+    %
+    
+    \framebreak
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{figures/kins-error-rate}
+    \end{figure}
+    %
+
+\end{frame}
+%/////////
+
 
 %===============================================================================
 \section{Open literature research lines}
@@ -723,13 +941,31 @@ We define symbolic knowledge injection as:
 %/////////
 \begin{frame}[c]{SKE \& SKI}
     %
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{figures/ske-ski-workflow}
+    \end{figure}
 \end{frame}
 %/////////
 
 
 %/////////
-\begin{frame}[c]{Other scientific fields}
+\begin{frame}[c]{Multi-Agent Systems}
     %
+    \begin{itemize}
+        \item agent to agent explanation \ccite{explanation-aixia2020dp}\\
+        %
+        $\rightarrow$ SKE + SKI + explanation;
+        %
+        \item logic as lingua franca for communication between heterogeneous entities;
+        %
+        \item knowledge sharing and knowledge exploitation among agents;
+        %
+        \item symbolic techniques integrated with sub-symbolic ones\\
+        %
+        $\rightarrow$ representing and manipulating cognitive
+        processes and their results.
+    \end{itemize}
 \end{frame}
 %/////////
 
@@ -748,8 +984,8 @@ We define symbolic knowledge injection as:
 %%%%
 \setbeamertemplate{page number in head/foot}{}
 %/////////
-\begin{frame}[c,noframenumbering]{\refname}
-%\begin{frame}[t,allowframebreaks,noframenumbering]{\refname}
+%\begin{frame}[c,noframenumbering]{\refname}
+\begin{frame}[t,allowframebreaks,noframenumbering]{\refname}
 %	\tiny
 	\scriptsize
 %	\footnotesize

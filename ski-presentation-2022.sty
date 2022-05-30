@@ -1,14 +1,42 @@
+\usepackage{listings}
 \usepackage{hyperref}
 \usepackage{csquotes}
 \usepackage{cleveref}
 \usepackage{stmaryrd}
 \usepackage{adjustbox}
+\usepackage{subfig}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{arydshln}
 
 \crefname{item}{item}{items}
 \Crefname{Item}{Item}{Items}
 
 \usepackage{wasysym}
 \usepackage[ddmmyyyy]{datetime}
+
+\usepackage{color}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+    language=Python,
+    aboveskip=2mm,
+    belowskip=2mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2
+}
 
 \renewcommand{\dateseparator}{-}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -17,6 +45,7 @@
 
 % version
 \newcommand{\psyki}{PSyKI}
+\newcommand{\longpsyki}{Platform for Symbolic Knowledge Injection}
 \newcommand{\templatemajor}{1}
 \newcommand{\templateminor}{4}
 \newcommand{\templatepatch}{20220217}
