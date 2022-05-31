@@ -51,6 +51,6 @@ with (open(sys.argv[1], mode='r') if len(sys.argv) > 1 else sys.stdin) as file:
 if major is None or minor is None or patch is None:
     major = 0
     minor = 1
-    patch = 0
+    patch = 1
 
 print(major, minor, patch, sep='.')
